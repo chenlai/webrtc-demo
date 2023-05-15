@@ -1,13 +1,33 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const fs = require('fs');
+const https = require('https');
+
 const app = express();
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+const port = 443;
+
+app.use(bodyParser.json());
+app.use(morgan('combined'));
+app.use(helmet());
+
+const options = {
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.crt')
+};
+
+const server = https.createServer(options, app);
+
+
+
+
 
 const users = [];
 
 app.use(express.static('public'));
+const { Server } = require("socket.io");
+const io = new Server(server);
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/webrtc_index.html');
 });
@@ -39,7 +59,9 @@ io.on('connection', (socket) => {
 
 });
 
-server.listen(3000, () => {
-  console.log('listening on *:3000');
+
+
+server.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 

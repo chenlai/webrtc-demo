@@ -4,6 +4,21 @@
 const localVideo = document.getElementById('localVideo');
 const remoteVideo = document.getElementById('remoteVideo');
 
+const registerButton = document.getElementById("registerButton");
+const startButton = document.getElementById("startButton");
+
+
+// Set event listeners for user interface widgets
+
+registerButton.addEventListener("click", register, false);
+startButton.addEventListener("click", start, false);
+
+
+
+function startup() {
+
+}
+
 
 const socket = io();
     let peerConnection;
