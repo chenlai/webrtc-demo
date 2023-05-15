@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebRTC Video Chat</title>
+  <style>
+    video {
+      width: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HTML for video chat interface -->
+  <video id="localVideo" autoplay></video>
+  <video id="remoteVideo" autoplay></video>
+  <!--<button onclick="start()">Start call</button> -->
+
+
+  <h3>视频会议</h3>
+  <p>
+      用户名：<input type="text" id="username">
+      <button onclick="register()">注册</button>
+  </p>
+  <hr>
+  <h3>开始会议</h3>
+  <p>
+      用户： <select id="user_list"></select>
+      <button onclick="start()">呼叫</button>
+  </p>
+
+  <!-- JavaScript code to handle WebRTC connections -->
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/main.js" async></script>
+
+
+  <script>
+    
+
+  </script>
+
+</body>
+</html>

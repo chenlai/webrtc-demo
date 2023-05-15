@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>聊天室</title>
+    <script src="https://cdn.socket.io/4.3.1/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+
+        function register() {
+            const username = document.getElementById("username").value;
+            socket.emit('register', username);
+        }
+
+        function sendMessage() {
+            const toUser = document.getElementById("user_list").value;
+            const message = document.getElementById("message").value;
+
+            socket.emit('private_message', {to: toUser, message: message});
+        }
+
+        socket.on('user_list', function(users) {
+            var userList = document.getElementById("user_list");
+            userList.innerHTML = "";
+            console.log("----------");
+            for (var i = 0; i < users.length; i++) {
+
+                var option = document.createElement("option");
+                option.value = users[i];
+                option.text = users[i];
+                console.log("user_list:   " + option.text);
+
+                userList.add(option);
+            }
+        });
+
+        socket.on('private_message', function(message){
+            console.log('from username : '+ message.from + ", Value" + message.message);
+        })
+    </script>
+</head>
+<body>
+    <h1>聊天室</h1>
+    <p>
+        用户名：<input type="text" id="username">
+        <button onclick="register()">注册</button>
+    </p>
+    <hr>
+    <h2>发送私信</h2>
+    <p>
+        发送给：<select id="user_list"></select>
+        内容：<input type="text" id="message">
+        <button onclick="sendMessage()">发送</button>
+    </p>
+
+</body>
+</html>
